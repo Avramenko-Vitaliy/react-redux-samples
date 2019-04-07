@@ -1,4 +1,4 @@
-import { successAction, failAction } from 'actions/actionTypes';
+import { successAction, failAction } from '../actions/actionTypes';
 
 import { getTopFilms } from '../api';
 

@@ -8,7 +8,7 @@ import App from './containers/App';
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <App history={history} />
     </Provider>,
     document.getElementById('app'),
 );
