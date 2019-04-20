@@ -1,25 +1,28 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 
-import { getFilms, getGenres } from '../actions';
+import { getGenres, getFilms } from '../actions';
 
 import TableFilms from '../components/TableFilms';
 
+import { readFilms, readPage, hasMore, readTotalPages } from '../selectors/films';
+
 const mapStateToProps = state => ({
-    currentPage: state.films.page,
-    totalPages: state.films.totalPages,
-    films: state.films.films,
-    hasNext: state.films.page < state.films.totalPages,
+    currentPage: readPage(state),
+    totalPages: readTotalPages(state),
+    films: readFilms(state),
+    hasNext: hasMore(state),
 });
 
 @connect(mapStateToProps, { getFilms, getGenres })
-export default class App extends PureComponent {
+export default class FilmsContainer extends PureComponent {
     static propTypes = {
         currentPage: PropTypes.number,
         totalPages: PropTypes.number,
-        films: PropTypes.array,
         hasNext: PropTypes.bool,
+        films: ImmutablePropTypes.list,
         getGenres: PropTypes.func.isRequired,
         getFilms: PropTypes.func.isRequired,
     };

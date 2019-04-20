@@ -6,18 +6,22 @@ import { GET_FILMS } from '../actions';
 const defaultState = fromJS({
     page: 1,
     totalPages: 0,
-    films: [],
+    ids: [],
 });
 
 export default function films(state = defaultState, action) {
     switch (action.type) {
         case successAction(GET_FILMS):
-            const { page, total_pages, results } = action.response.data;
-            return state.merge(fromJS({
-                page,
-                totalPages: total_pages,
-                films: page === 1 ? results : state.get('films').concat(fromJS(results)),
-            }));
+            let ids = fromJS([]);
+            if (action.page > 1) {
+                ids = state.get('ids');
+            }
+            const newIds = fromJS(action.response.normalizedData.result).filter(r => ids.indexOf(r) === -1);
+            ids = ids.concat(newIds);
+            return state
+                .set('ids', ids)
+                .set('page', action.response.data.page)
+                .set('totalPages', action.response.data.total_pages);
         default:
             return state;
     }

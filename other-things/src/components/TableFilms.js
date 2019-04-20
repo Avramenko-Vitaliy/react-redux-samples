@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import { List } from 'immutable';
 import InfiniteScroll from 'react-infinite-scroller';
 
 const TableFilms = props => (
-    props.films && props.films.length &&
+    props.films && !props.films.isEmpty() &&
     <InfiniteScroll
         pageStart={1}
         hasMore={props.hasMore}
@@ -13,6 +15,7 @@ const TableFilms = props => (
             <thead>
             <tr>
                 <th>Title</th>
+                <th>Genres</th>
                 <th>Rating</th>
                 <th>Release Date</th>
             </tr>
@@ -20,10 +23,11 @@ const TableFilms = props => (
             <tbody>
             {
                 props.films.map(item => (
-                    <tr key={item.id}>
-                        <td>{item.title}</td>
-                        <td>{item.vote_average}</td>
-                        <td>{item.release_date}</td>
+                    <tr key={item.get('id')}>
+                        <td>{item.get('title')}</td>
+                        <td>{item.get('genres', List()).map(item => item.get('name')).join(', ')}</td>
+                        <td>{item.get('vote_average')}</td>
+                        <td>{item.get('release_date')}</td>
                     </tr>
                 ))
             }
@@ -33,8 +37,8 @@ const TableFilms = props => (
 );
 
 TableFilms.propTypes = {
-    films: PropTypes.array,
     hasMore: PropTypes.bool,
+    films: ImmutablePropTypes.list,
     loadMore: PropTypes.func.isRequired,
 };
 

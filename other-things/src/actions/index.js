@@ -9,6 +9,7 @@ export const GET_FILMS = 'GET_FILMS';
 export const GET_FILM = 'GET_FILM';
 
 export const getFilms = (page = 1) => ({
+    page,
     [CALL_API]: {
         type: GET_FILMS,
         params: { page },
@@ -25,10 +26,10 @@ export const getFilm = id => ({
     },
 });
 
-export const getGenres = {
+export const getGenres = () => ({
     [CALL_API]: {
         type: GET_GENRES,
         endpoint: '/genre/movie/list',
-        converter: normalizePagingResponse(schemas.GENRES),
+        converter: normalizeEntityResponse(schemas.GENRES),
     },
-};
+});

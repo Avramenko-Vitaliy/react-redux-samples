@@ -1,13 +1,15 @@
+import '@babel/polyfill';
+
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 
 import configureStore from './store';
 
-import App from './containers/App';
+import App from './components/App';
 
-const history = createHistory();
+const history = createBrowserHistory();
 const store = configureStore(history);
 
 ReactDOM.render(

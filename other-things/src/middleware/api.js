@@ -12,7 +12,7 @@ const instance = axios.create({
     },
 });
 
-export const callApi = (method = 'get', endpoint, body, params, responseType = 'json') =>
+export const callApi = (method = 'get', endpoint, body, params = {}, responseType = 'json') =>
     instance({
         url: endpoint, method, data: body, params, responseType,
     });

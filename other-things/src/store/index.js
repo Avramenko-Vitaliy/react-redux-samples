@@ -1,7 +1,7 @@
-import { Map } from 'immutable';
-import { applyMiddleware, createStore } from 'redux';
+import { fromJS } from 'immutable';
+import { applyMiddleware, compose, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
-import { routerMiddleware } from 'connected-react-router';
+import { routerMiddleware } from 'connected-react-router/immutable';
 
 import rootReducer from '../reducers';
 
@@ -19,7 +19,7 @@ export default function configureStore(history) {
 
     return createStore(
         rootReducer(history),
-        Map(),
+        fromJS({}),
         compose(...enhancers),
     );
 }

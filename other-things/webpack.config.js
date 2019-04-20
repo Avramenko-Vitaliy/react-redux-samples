@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -28,7 +29,14 @@ module.exports = {
             }
         ],
     },
+    devServer: {
+        historyApiFallback: true,
+    },
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.ProvidePlugin({
+            React: 'react',
+        }),
         new HtmlWebpackPlugin({
             template: "./src/index.html"
         })
