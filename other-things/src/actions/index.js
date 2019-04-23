@@ -1,5 +1,7 @@
 import { CALL_API } from '../middleware/api';
 
+import { readFilm } from '../selectors/films';
+
 import { normalizeEntityResponse, normalizePagingResponse } from '../utils/converters';
 
 import schemas from '../data/schemas';
@@ -18,13 +20,21 @@ export const getFilms = (page = 1) => ({
     },
 });
 
-export const getFilm = id => ({
-    [CALL_API]: {
-        type: GET_FILM,
-        endpoint: `/movie/${id}`,
-        converter: normalizeEntityResponse(schemas.FILM),
-    },
-});
+
+//TODO better way use thunk
+export const getFilm = id => (dispatch, getState) => {
+    const film = readFilm(getState())(id);
+    if (film && !film.isEmpty()) {
+        return null;
+    }
+    return dispatch({
+        [CALL_API]: {
+            type: GET_FILM,
+            endpoint: `/movie/${id}`,
+            converter: normalizeEntityResponse(schemas.FILM),
+        },
+    });
+};
 
 export const getGenres = () => ({
     [CALL_API]: {
