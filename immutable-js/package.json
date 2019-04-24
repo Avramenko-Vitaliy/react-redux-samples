@@ -1,0 +1,9 @@
+{
+  "name": "redux-thunk",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "ISC",
+  "dependencies": {
+    "immutable": "^4.0.0-rc.12"
+  }
+}
