@@ -1,5 +1,4 @@
 import { createSelector, defaultMemoize } from 'reselect';
-import * as Immutable from 'immutable';
 import { denormalize } from 'normalizr';
 
 import schemas from '../data/schemas';
@@ -18,7 +17,7 @@ export const hasMore = createSelector(
 
 export const readFilm = createSelector(
     getEntities,
-    entities => defaultMemoize(id => denormalize(id, schemas.FILM, entities), Immutable.is),
+    entities => defaultMemoize(id => denormalize(id, schemas.FILM, entities)),
 );
 
 export const readFilms = createSelector(
