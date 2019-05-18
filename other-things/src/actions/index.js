@@ -20,8 +20,6 @@ export const getFilms = (page = 1) => ({
     },
 });
 
-
-//TODO better way use thunk
 export const getFilm = id => (dispatch, getState) => {
     const film = readFilm(getState())(id);
     if (film && !film.isEmpty()) {
