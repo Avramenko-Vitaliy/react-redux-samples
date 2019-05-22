@@ -17,7 +17,7 @@ export default class FilmRow extends PureComponent {
         const { film } = this.props;
 
         return (
-            <tr key={film.get('id')} onClick={this.handleClick}>
+            <tr onClick={this.handleClick}>
                 <td>{film.get('title')}</td>
                 <td>{film.get('genres', List()).filter(item => !!item).map(item => item.get('name')).join(', ')}</td>
                 <td>{film.get('vote_average')}</td>
