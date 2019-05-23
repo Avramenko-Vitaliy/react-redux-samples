@@ -1,26 +1,30 @@
-import { fromJS } from 'immutable';
 import { applyMiddleware, compose, createStore } from 'redux';
-import { routerMiddleware } from 'connected-react-router/immutable';
+import createSagaMiddleware from 'redux-saga';
 
 import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
 
+import rootSaga from '../sagas';
+
 import rootReducer from '../reducers';
 
-import todos from '../middleware/todos';
+export default function configureStore() {
+    const sagaMiddleware = createSagaMiddleware();
 
-export default function configureStore(history) {
     const middlewares = [
-        todos,
-        routerMiddleware(history),
+        sagaMiddleware,
     ];
 
     const enhancers = [
         composeWithDevTools(applyMiddleware(...middlewares)),
     ];
 
-    return createStore(
-        rootReducer(history),
-        fromJS({}),
+    const store = createStore(
+        rootReducer,
+        {},
         compose(...enhancers),
     );
+
+    sagaMiddleware.run(rootSaga);
+
+    return store;
 }
